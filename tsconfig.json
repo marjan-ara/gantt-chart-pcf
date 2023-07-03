@@ -1,0 +1,8 @@
+{
+  "extends": "./node_modules/pcf-scripts/tsconfig_base.json",
+  "compilerOptions": {
+    "typeRoots": ["node_modules/@types"],
+    "plugins": [{ "name": "typescript-plugin-css-modules" }],
+    "allowSyntheticDefaultImports": true
+  }
+}

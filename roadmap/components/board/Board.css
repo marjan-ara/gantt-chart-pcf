@@ -11,6 +11,10 @@
   display: flex;
   flex-direction: column;
 }
+.project-col-header {
+  height: 60px;
+  font-weight: bold;
+}
 
 .change-week-btn-div {
   position: relative;
@@ -43,12 +47,65 @@
   flex-direction: row;
   z-index: 10;
 }
+.week-board-header {
+  display: flex;
+  flex-direction: column;
+  height: 70px;
+}
+.week-box {
+  display: flex;
+  flex-direction: row;
+  border: solid thin gray;
+  margin-right: 1px;
+  margin-left: 1px;
+  height: 30px;
+}
+.week-div {
+  height: 100%;
+  flex: 1;
+  border-left: solid thin rgb(160, 160, 160);
+  text-align: left;
+}
+.day-div {
+  height: 20px;
+  flex: 1;
+  text-align: center;
+  font-size: 0.9em;
+  padding: 0.5em;
+}
+.roadmap-row {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  z-index: 20;
+  height: 40px;
+}
 
 .next-week-button {
   position: absolute;
   right: 0;
   color: black;
   top: 50%;
+}
+
+.feature-name-div {
+  display: flex;
+  flex: 1;
+  font-size: 0.7em;
+  text-align: left;
+  white-space: pre-wrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.feature-date-div {
+  display: flex;
+  flex: 1;
+  font-size: 0.7em;
+  text-align: left;
+  white-space: pre-wrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .main-board {
@@ -62,10 +119,23 @@
   z-index: 10;
 }
 
+.feature-info-cell {
+  display: inline-flex;
+  flex: 3;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.left-bordered-cell {
+  border-left: solid thin rgb(230, 230, 230);
+}
 .right-bordered-cell {
   border-right: solid thin rgb(230, 230, 230);
 }
 
+/*************************************************************/
+/*************************************************************/
+/*************************************************************/
 .feature-info-div {
   height: 100%;
   width: 30%;

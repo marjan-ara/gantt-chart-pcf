@@ -271,7 +271,20 @@ const Board: React.FC<IRoadmapViewProps> = (props) => {
                     index === weekNumbers.length - 1
                       ? { borderRight: 'solid thin rgb(160, 160, 160)' }
                       : {}
-                  }></div>
+                  }>
+                  {/* <span style={{ paddingLeft: '0.5em' }}>
+                <b>{w}</b>
+              </span>
+              <div className="week-box">
+                <div className="day-div">Mo.</div>
+                <div className="day-div">Tu.</div>
+                <div className="day-div">We.</div>
+                <div className="day-div">Th.</div>
+                <div className="day-div">Fr.</div>
+                <div className="day-div">Sa.</div>
+                <div className="day-div">Su.</div>
+              </div> */}
+                </div>
               ))}
             </div>
             <div className="board-row">
@@ -345,7 +358,73 @@ const Board: React.FC<IRoadmapViewProps> = (props) => {
             />
           </div>
         </div>
+
+        {/* <div className="feature-board">
+          {projects.map((p, index) => (
+            <div
+              key={p.id}
+              style={
+                index % 2 === 0
+                  ? {
+                      width: '100%',
+                      padding: '3px',
+                      backgroundColor: 'rgb(240, 240, 240)'
+                    }
+                  : { width: '100%', padding: '3px' }
+              }>
+              {features
+                .filter((x) => x.projectId === p.id)
+                .map((element) => (
+                  <div key={element.id} className="roadmap-row">
+                    <div
+                      key={`${element.id}-1`}
+                      style={getInnerDivStyle(
+                        firstDay,
+                        element.startDate,
+                        false
+                      )}
+                    />
+                    <div
+                      key={`${element.id}-2`}
+                      style={getInnerDivStyle(
+                        element.startDate,
+                        element.endDate,
+                        true
+                      )}>
+                      <div className="feature-name-div">
+                        {`Feature: ${element.name}`}
+                        <br />
+                        {`Status: ${element.status}`}
+                      </div>
+                      <div className="feature-date-div ">
+                        {`StartDate: ${
+                          element.startDate.toISOString().split('T')[0]
+                        }`}
+                        <br />
+                        {`EndDate: ${
+                          element.endDate.toISOString().split('T')[0]
+                        }`}
+                      </div>
+                    </div>
+                    <div
+                      key={`${element.id}-3`}
+                      style={getInnerDivStyle(element.endDate, lastDay, false)}
+                    />
+                  </div>
+                ))}
+            </div>
+          ))}
+        </div> */}
       </div>
+      {/* <div className="change-week-btn-div">
+        <IconButton
+          className="next-week-button"
+          iconProps={nextWeekIcon}
+          onClick={() => changeWeek(true)}
+          title="Next Week"
+          ariaLabel="next week"
+        />
+      </div> */}
     </div>
   )
 }

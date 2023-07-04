@@ -1,7 +1,8 @@
 /* eslint-disable no-unused-vars */
+
 import { IInputs, IOutputs } from './generated/ManifestTypes'
 import * as React from 'react'
-import { IProject, IRoadmapFeature, IRoadmapViewProps } from './interfaces'
+import { IRoadmapFeature, IRoadmapViewProps } from './interfaces'
 import { getFirstandLastDays } from './services/functions'
 import Board from './components/board/Board'
 
@@ -51,36 +52,43 @@ export class roadmap
   ): React.ReactElement {
     const dataSet = this._context.parameters.dataSet
     const timePeriod = getFirstandLastDays(this._props.firstDay)
-    const features: IRoadmapFeature[] = []
+    let features: IRoadmapFeature[] = []
+
     dataSet.sortedRecordIds.forEach((id) => {
-      const sDate = new Date(
-        String(dataSet.records[id].getValue('arades_startdate'))
-      )
-      const eDate = new Date(
-        String(dataSet.records[id].getValue('arades_enddate'))
-      )
-      //   if (
-      //     (sDate >= timePeriod.startDate && sDate <= timePeriod.endDate) ||
-      //     (eDate >= timePeriod.startDate && eDate <= timePeriod.endDate)
-      //   ) {
       features.push({
         id: String(dataSet.records[id].getValue('arades_roadmapfeatureid')),
         projectId: String(dataSet.records[id].getValue('Project')),
         projectName: String(dataSet.records[id].getValue('Project')),
-        name: String(
-          // dataSet.records[id].getFormattedValue('arades_featureid')
-          dataSet.records[id].getValue('_arades_featureid_value')
-        ),
+        name: String(dataSet.records[id].getValue('_arades_featureid_value')),
         startDate: new Date(
           String(dataSet.records[id].getValue('arades_startdate'))
         ),
         endDate: new Date(
           String(dataSet.records[id].getValue('arades_enddate'))
         ),
-        status: ''
+        status: String(dataSet.records[id].getValue('Status_Reason')),
+        progress: Number(dataSet.records[id].getValue('Progress'))
       })
-      //   }
     })
+    features = features.filter((x) => x.id !== 'undefined')
+    if (features.length === 0) {
+      for (let i = 0; i < 10; i++) {
+        const startDate = new Date(timePeriod.startDate)
+        startDate.setDate(startDate.getDate() + i)
+        const endDate = new Date(timePeriod.startDate)
+        endDate.setDate(endDate.getDate() + i + 7)
+        features.push({
+          id: String(i),
+          name: `Feature ${i}, Request second form "Notification of activity"`,
+          status: '',
+          projectId: String(i),
+          projectName: `Project ${i} _ Project name`,
+          startDate: startDate,
+          endDate: endDate,
+          progress: 0.35
+        })
+      }
+    }
 
     this._props.features = features
 
@@ -90,7 +98,6 @@ export class roadmap
   }
 
   private notifyChange(newFeatures: IRoadmapFeature[], newFirstDay: Date) {
-    console.log('notifyChange')
     this._props.firstDay = newFirstDay
     this._props.features = newFeatures
     this.notifyOutputChanged()

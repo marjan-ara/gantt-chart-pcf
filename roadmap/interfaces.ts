@@ -11,6 +11,7 @@ export interface IRoadmapFeature {
   startDate: Date
   endDate: Date
   status: string
+  progress: number
 }
 export interface IProject {
   id: string

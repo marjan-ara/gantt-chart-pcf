@@ -5,16 +5,11 @@
   flex-direction: row;
 }
 .project-col {
-  width: 10%;
+  width: 25%;
   height: 100%;
-  border: solid thin gray;
-  border-radius: 3px;
+  border: solid thin rgb(230, 230, 230);
   display: flex;
   flex-direction: column;
-}
-.project-col-header {
-  height: 60px;
-  font-weight: bold;
 }
 
 .change-week-btn-div {
@@ -48,39 +43,6 @@
   flex-direction: row;
   z-index: 10;
 }
-.week-board-header {
-  display: flex;
-  flex-direction: column;
-  height: 70px;
-}
-.week-box {
-  display: flex;
-  flex-direction: row;
-  border: solid thin gray;
-  margin-right: 1px;
-  margin-left: 1px;
-  height: 30px;
-}
-.week-div {
-  height: 100%;
-  flex: 1;
-  border: solid thin;
-  text-align: left;
-}
-.day-div {
-  height: 20px;
-  flex: 1;
-  text-align: center;
-  font-size: 0.9em;
-  padding: 0.5em;
-}
-.roadmap-row {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  z-index: 20;
-  height: 40px;
-}
 
 .next-week-button {
   position: absolute;
@@ -89,21 +51,80 @@
   top: 50%;
 }
 
-.feature-name-div {
+.main-board {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
   display: flex;
-  flex: 1;
-  font-size: 0.7em;
-  text-align: left;
-  white-space: pre-wrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  flex-direction: row;
+  z-index: 10;
 }
 
-.feature-date-div {
+.right-bordered-cell {
+  border-right: solid thin rgb(230, 230, 230);
+}
+
+.feature-info-div {
+  height: 100%;
+  width: 30%;
+  display: flex;
+  flex-direction: row;
+  /* border-right: solid thin rgb(230, 230, 230); */
+  border-right: solid thin rgb(160, 160, 160);
+}
+
+.feature-col {
+  height: 100%;
+  width: 75%;
+  display: flex;
+  flex-direction: column;
+}
+.date-info-div {
+  height: 100%;
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.board-row {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  height: 3em;
+}
+.date-cell {
   display: flex;
   flex: 1;
-  font-size: 0.7em;
+  align-items: flex-end;
+  justify-content: center;
+  border: solid thin rgb(230, 230, 230);
+  box-sizing: border-box;
+}
+.feature-board {
+  position: absolute;
+  top: 3em;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.feature-info-div-title {
+  display: flex;
+  flex: 1;
+  box-sizing: border-box;
+  margin-top: 0.6em;
+  margin-bottom: 0.6em;
+  padding-left: 0.5em;
+}
+.feature-info-div-column {
+  display: flex;
+  flex: 1;
   text-align: left;
+  padding-left: 0.5em;
   white-space: pre-wrap;
   overflow: hidden;
   text-overflow: ellipsis;

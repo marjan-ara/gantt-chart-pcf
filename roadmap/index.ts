@@ -51,7 +51,7 @@ export class roadmap
     context: ComponentFramework.Context<IInputs>
   ): React.ReactElement {
     const dataSet = this._context.parameters.dataSet
-    const timePeriod = getFirstandLastDays(this._props.firstDay)
+    const timePeriod = getFirstandLastDays(this._props.firstDay, true)
     let features: IRoadmapFeature[] = []
 
     dataSet.sortedRecordIds.forEach((id) => {

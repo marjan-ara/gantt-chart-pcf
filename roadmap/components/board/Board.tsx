@@ -1,14 +1,23 @@
 /* eslint-disable react/prop-types */
 
-import { IProject, IRoadmapFeature, IRoadmapViewProps } from '../../interfaces'
+import { IRoadmapFeature, IRoadmapViewProps } from '../../interfaces'
 import './Board.css'
 import React = require('react')
-import { IconButton, IIconProps, registerIcons } from '@fluentui/react'
+import {
+  CommandBarButton,
+  IconButton,
+  IIconProps,
+  registerIcons
+} from '@fluentui/react'
 import {
   CaretLeftSolid8Icon,
   CaretRightSolid8Icon
 } from '@fluentui/react-icons-mdl2'
-import { getDaysDifference, getWeekNumber } from '../../services/functions'
+import {
+  getDaysDifference,
+  getFirstandLastDays,
+  getWeekNumber
+} from '../../services/functions'
 
 registerIcons({
   icons: {
@@ -33,14 +42,15 @@ const Board: React.FC<IRoadmapViewProps> = (props) => {
     'Nov.',
     'Dec.'
   ]
-  const [weekNumbers, setWeekNumbers] = React.useState<string[]>()
+  const [weekOrMonthNames, setWeekOrMonthNames] = React.useState<string[]>()
   const [firstDay, setFirstDay] = React.useState(props.firstDay)
   const [lastDay, setLastDay] = React.useState(props.lastDay)
   const [features, setFeatures] = React.useState<IRoadmapFeature[]>(
     props.features
   )
-  const [projects, setProjects] = React.useState<IProject[]>([])
+  // const [projects, setProjects] = React.useState<IProject[]>([])
   const [weekDays, setWeekDays] = React.useState<Date[]>([])
+  const [weekView, setWeekView] = React.useState(true)
 
   const initializeComponent = () => {
     const featureList: IRoadmapFeature[] = []
@@ -65,15 +75,15 @@ const Board: React.FC<IRoadmapViewProps> = (props) => {
       return a.startDate.getTime() - b.startDate.getTime()
     })
     setFeatures(featureList)
-    const projectList: IProject[] = []
-    featureList.forEach((f) => {
-      if (!projectList.some((x) => x.id === f.projectId))
-        projectList.push({
-          id: f.projectId,
-          name: f.projectId
-        })
-    })
-    setProjects(projectList)
+    // const projectList: IProject[] = []
+    // featureList.forEach((f) => {
+    //   if (!projectList.some((x) => x.id === f.projectId))
+    //     projectList.push({
+    //       id: f.projectId,
+    //       name: f.projectId
+    //     })
+    // })
+    // setProjects(projectList)
   }
 
   const getInnerDivStyle = (
@@ -82,23 +92,30 @@ const Board: React.FC<IRoadmapViewProps> = (props) => {
     calcFeatureDuration: boolean,
     progress: number
   ) => {
-    if (calcFeatureDuration) {
-      console.log('firstDay', firstDay)
-      console.log('lastDay', lastDay)
-      console.log('date1', date1)
-      console.log('date2', date2)
-    }
+    // if (calcFeatureDuration) {
+    console.log(
+      'firstDay:',
+      firstDay,
+      'lastDay:',
+      lastDay,
+      'date1',
+      date1,
+      'date2',
+      date2
+    )
+
+    // }
     let d1 = date1
     let d2 = date2
     if (d1 < firstDay) d1 = firstDay
     if (d2 > lastDay) d2 = lastDay
-    if (calcFeatureDuration) {
-      console.log('d1', d1)
-      console.log('d2', d2)
-    }
+    // if (calcFeatureDuration) {
+    //   console.log('d1', d1)
+    //   console.log('d2', d2)
+    // }
     let flexVal = 0
     if (date1 < date2) flexVal = getDaysDifference(d1, d2)
-    console.log('flexVal', flexVal)
+    // console.log('flexVal', flexVal)
     const outStyle: any = {
       flex: flexVal
     }
@@ -123,51 +140,74 @@ const Board: React.FC<IRoadmapViewProps> = (props) => {
     return outStyle
   }
 
-  const getProjectDivStyle = (projectId: string) => {
-    const n = features.filter((x) => x.projectId === projectId).length
-    const h = n * 3
-    const divStyle: any = {
-      color: 'rgb(0,142,200)',
-      display: 'flex',
-      alignItems: 'center',
-      fontWeight: 'bold',
-      width: '100%',
-      textAlign: 'left',
-      height: `${h}em`,
-      paddingLeft: '0.3em',
-      boxSizing: 'border-box',
-      borderBottom: 'solid thin rgb(220, 220, 220)'
-    }
-    // if (index % 2 === 0) divStyle.backgroundColor = 'rgb(230,250,255)'
-    // else divStyle.backgroundColor = 'rgb(175,230,255)'
-    return divStyle
-  }
+  // const getProjectDivStyle = (projectId: string) => {
+  //   const n = features.filter((x) => x.projectId === projectId).length
+  //   const h = n * 3
+  //   const divStyle: any = {
+  //     color: 'rgb(0,142,200)',
+  //     display: 'flex',
+  //     alignItems: 'center',
+  //     fontWeight: 'bold',
+  //     width: '100%',
+  //     textAlign: 'left',
+  //     height: `${h}em`,
+  //     paddingLeft: '0.3em',
+  //     boxSizing: 'border-box',
+  //     borderBottom: 'solid thin rgb(220, 220, 220)'
+  //   }
+  //   // if (index % 2 === 0) divStyle.backgroundColor = 'rgb(230,250,255)'
+  //   // else divStyle.backgroundColor = 'rgb(175,230,255)'
+  //   return divStyle
+  // }
 
   React.useEffect(() => {
-    let weekNumber = getWeekNumber(firstDay)
-    let weekNumberStr = String(weekNumber).padStart(2, '0')
-    const weekNumberStrings = []
-    for (let i = 0; i < 3; i++) {
-      const str = `CW${weekNumberStr}`
-      weekNumberStrings.push(str)
-      weekNumber += 1
-      weekNumberStr = String(weekNumber).padStart(2, '0')
+    const nameStrings = []
+    if (weekView) {
+      let weekNumber = getWeekNumber(firstDay)
+      let weekNumberStr = String(weekNumber).padStart(2, '0')
+      for (let i = 0; i < 3; i++) {
+        const str = `CW${weekNumberStr}`
+        nameStrings.push(str)
+        weekNumber += 1
+        weekNumberStr = String(weekNumber).padStart(2, '0')
+      }
+      setWeekOrMonthNames(nameStrings)
+    } else {
+      for (let i = 0; i < 3; i++) {
+        const day = new Date(firstDay)
+        const str = monthNames[day.getMonth() + i]
+        nameStrings.push(str)
+      }
+      setWeekOrMonthNames(nameStrings)
     }
-    setWeekNumbers(weekNumberStrings)
 
     const days = []
-
-    for (let i = 0; i < 21; i++) {
+    const dayCounts = getDaysDifference(firstDay, lastDay)
+    for (let i = 0; i < dayCounts; i++) {
       const date = new Date(firstDay)
       date.setDate(firstDay.getDate() + i)
       days.push(date)
     }
+    console.log('first Day', firstDay, 'last day', lastDay)
 
     setWeekDays(days)
     initializeComponent()
   }, [firstDay])
 
   React.useEffect(() => {
+    let timePeriod: any = {}
+    if (weekView) {
+      timePeriod = getFirstandLastDays(new Date(), true)
+    } else {
+      timePeriod = getFirstandLastDays(new Date(), false)
+    }
+    console.log('timePeriod', timePeriod)
+    setFirstDay(timePeriod.startDate)
+    setLastDay(timePeriod.endDate)
+  }, [weekView])
+
+  React.useEffect(() => {
+    console.log('features', features)
     if (features !== props.features) {
       props.onChange(features, firstDay)
     }
@@ -175,6 +215,7 @@ const Board: React.FC<IRoadmapViewProps> = (props) => {
 
   React.useEffect(() => {
     if (features !== props.features) {
+      setWeekView(true)
       setFeatures(props.features)
     }
     if (firstDay !== props.firstDay) {
@@ -184,17 +225,27 @@ const Board: React.FC<IRoadmapViewProps> = (props) => {
     initializeComponent()
   }, [props.firstDay, props.features])
 
-  const changeWeek = (nextWeek: boolean) => {
+  const changeWeekOrMonth = (next: boolean) => {
     const first = new Date(firstDay)
     const last = new Date(lastDay)
-    if (nextWeek) {
-      first.setDate(first.getDate() + 7)
-      last.setDate(last.getDate() + 7)
+    if (weekView) {
+      if (next) {
+        first.setDate(first.getDate() + 7)
+        last.setDate(last.getDate() + 7)
+      } else {
+        first.setDate(first.getDate() - 7)
+        last.setDate(last.getDate() - 7)
+      }
     } else {
-      first.setDate(first.getDate() - 7)
-      last.setDate(last.getDate() - 7)
+      if (next) {
+        first.setMonth(first.getMonth() + 1, 1)
+        last.setMonth(last.getMonth() + 1)
+      } else {
+        first.setMonth(first.getMonth() - 1, 1)
+        last.setMonth(last.getMonth() - 1)
+      }
     }
-
+    console.log('first:', first, 'last:', last)
     setFirstDay(first)
     setLastDay(last)
   }
@@ -202,9 +253,22 @@ const Board: React.FC<IRoadmapViewProps> = (props) => {
   return (
     <div className="container">
       <div className="roadmap-borad">
+        <div className="option-board">
+          <CommandBarButton
+            className="option-btn"
+            text="Week View"
+            onClick={() => setWeekView(true)}
+          />
+          <CommandBarButton
+            className="option-btn"
+            text="Month View"
+            style={{ marginRight: '30px' }}
+            onClick={() => setWeekView(false)}
+          />
+        </div>
         <div className="main-board">
           <div className="feature-info-div">
-            <div className="project-col">
+            {/* <div className="project-col">
               <div
                 className="board-row"
                 style={{ borderBottom: 'solid thin rgb(230,230,230)' }}>
@@ -215,11 +279,14 @@ const Board: React.FC<IRoadmapViewProps> = (props) => {
                   {p.name}
                 </div>
               ))}
-            </div>
+            </div> */}
             <div className="feature-col">
               <div
                 className="board-row"
                 style={{ borderBottom: 'solid thin rgb(230,230,230)' }}>
+                <div className="feature-info-div-title right-bordered-cell">
+                  Project
+                </div>
                 <div className="feature-info-div-title right-bordered-cell">
                   Feature
                 </div>
@@ -237,6 +304,11 @@ const Board: React.FC<IRoadmapViewProps> = (props) => {
                       ? { backgroundColor: 'rgb(245,245,245)' }
                       : { backgroundColor: 'white' }
                   }>
+                  <div
+                    className="feature-info-div-column"
+                    style={{ color: 'rgb(0,142,200)' }}>
+                    {f.projectName}
+                  </div>
                   <div
                     className="feature-info-div-column"
                     style={{ color: 'rgb(0,142,200)' }}>
@@ -258,50 +330,41 @@ const Board: React.FC<IRoadmapViewProps> = (props) => {
               iconProps={prevWeekIcon}
               title="Previous Week "
               ariaLabel="Previous week"
-              onClick={() => changeWeek(false)}
+              onClick={() => changeWeekOrMonth(false)}
             />
           </div>
           <div className="date-info-div">
             <div className="week-board">
-              {weekNumbers?.map((w, index) => (
+              {weekOrMonthNames?.map((item, index) => (
                 <div
-                  key={w}
+                  key={item}
                   className="week-div"
                   style={
-                    index === weekNumbers.length - 1
+                    index === weekOrMonthNames.length - 1
                       ? { borderRight: 'solid thin rgb(160, 160, 160)' }
                       : {}
                   }>
-                  {/* <span style={{ paddingLeft: '0.5em' }}>
-                <b>{w}</b>
-              </span>
-              <div className="week-box">
-                <div className="day-div">Mo.</div>
-                <div className="day-div">Tu.</div>
-                <div className="day-div">We.</div>
-                <div className="day-div">Th.</div>
-                <div className="day-div">Fr.</div>
-                <div className="day-div">Sa.</div>
-                <div className="day-div">Su.</div>
-              </div> */}
+                  {!weekView && <div className="month-title">{item}</div>}
                 </div>
               ))}
             </div>
             <div className="board-row">
-              {weekDays.map((day, index) => (
-                <div key={String(day)} className="date-cell">
-                  {index === 0 || day.getDate() === 1 ? (
-                    <>
-                      {monthNames[day.getMonth()]}
-                      <br />
-                    </>
-                  ) : (
-                    ''
-                  )}
+              {weekView
+                ? weekDays.map((day, index) => (
+                    <div key={String(day)} className="date-cell">
+                      {index === 0 || day.getDate() === 1 ? (
+                        <>
+                          {monthNames[day.getMonth()]}
+                          <br />
+                        </>
+                      ) : (
+                        ''
+                      )}
 
-                  {day.getDate()}
-                </div>
-              ))}
+                      {day.getDate()}
+                    </div>
+                  ))
+                : ''}
             </div>
             {features.map((f, index) => (
               <div
@@ -312,9 +375,10 @@ const Board: React.FC<IRoadmapViewProps> = (props) => {
                     ? { backgroundColor: 'rgb(245,245,245)' }
                     : { backgroundColor: 'white' }
                 }>
-                {weekDays.map((item, ind) => (
-                  <div key={`${index}-${ind}`} className="date-cell"></div>
-                ))}
+                {weekView &&
+                  weekDays.map((item, ind) => (
+                    <div key={`${index}-${ind}`} className="date-cell"></div>
+                  ))}
               </div>
             ))}
             <div className="feature-board">
@@ -352,7 +416,7 @@ const Board: React.FC<IRoadmapViewProps> = (props) => {
             <IconButton
               className="next-week-button"
               iconProps={nextWeekIcon}
-              onClick={() => changeWeek(true)}
+              onClick={() => changeWeekOrMonth(true)}
               title="Next Week"
               ariaLabel="next week"
             />

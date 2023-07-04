@@ -1,17 +1,30 @@
 import { ITimePeriod } from '../interfaces'
 
-export const getFirstandLastDays = (inputDate: Date): ITimePeriod => {
+export const getFirstandLastDays = (
+  inputDate: Date,
+  weekView: boolean
+): ITimePeriod => {
   const date = new Date(inputDate)
-  var first = date.getDate() - date.getDay() + 1
-  const start = new Date(date.getTime())
-  const end = new Date(date.getTime())
-  start.setDate(first)
-  start.setHours(0, 0, 0, 0)
-  end.setDate(first + 21)
-  end.setHours(0, 0, 0, 0)
-  const output: ITimePeriod = {
-    startDate: start,
-    endDate: end
+  let output: ITimePeriod
+  if (weekView) {
+    var first = date.getDate() - date.getDay() + 1
+    const start = new Date(date.getTime())
+    const end = new Date(date.getTime())
+    start.setDate(first)
+    start.setHours(0, 0, 0, 0)
+    end.setDate(first + 21)
+    end.setHours(0, 0, 0, 0)
+    output = {
+      startDate: start,
+      endDate: end
+    }
+  } else {
+    var firstDay = new Date(date.getFullYear(), date.getMonth(), 1)
+    var lastDay = new Date(date.getFullYear(), date.getMonth() + 3, 0)
+    output = {
+      startDate: firstDay,
+      endDate: lastDay
+    }
   }
   return output
 }
@@ -32,14 +45,6 @@ export const getDaysDifference = (date1: Date, date2: Date): number => {
   if (date2 <= date1) return 0
   var Difference_In_Time = date2.getTime() - date1.getTime()
   var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24)
-  console.log(
-    'date1',
-    date1,
-    'date2',
-    date2,
-    'Difference_In_Days',
-    Difference_In_Days
-  )
   return Difference_In_Days
 }
 

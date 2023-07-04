@@ -4,6 +4,7 @@
   display: flex;
   flex-direction: row;
 }
+
 .project-col {
   width: 25%;
   height: 100%;
@@ -109,14 +110,30 @@
 }
 
 .main-board {
-  height: 100%;
+  height: calc(100% - 3em);
+  width: 100%;
+  position: absolute;
+  top: 3em;
+  left: 0;
+  display: flex;
+  flex-direction: row;
+  z-index: 10;
+}
+.option-board {
+  height: 3em;
   width: 100%;
   position: absolute;
   top: 0;
   left: 0;
   display: flex;
   flex-direction: row;
-  z-index: 10;
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 30px;
+}
+.option-btn {
+  height: 2em;
+  border-left: solid thin rgb(230, 230, 230);
 }
 
 .feature-info-cell {
@@ -133,21 +150,18 @@
   border-right: solid thin rgb(230, 230, 230);
 }
 
-/*************************************************************/
-/*************************************************************/
-/*************************************************************/
 .feature-info-div {
   height: 100%;
   width: 30%;
   display: flex;
   flex-direction: row;
-  /* border-right: solid thin rgb(230, 230, 230); */
   border-right: solid thin rgb(160, 160, 160);
+  border-top: solid thin rgb(160, 160, 160);
 }
 
 .feature-col {
   height: 100%;
-  width: 75%;
+  width: 100%;
   display: flex;
   flex-direction: column;
 }
@@ -157,6 +171,7 @@
   display: flex;
   flex-direction: column;
   position: relative;
+  border-top: solid thin rgb(160, 160, 160);
 }
 .board-row {
   width: 100%;
@@ -198,4 +213,12 @@
   white-space: pre-wrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+.month-title {
+  width: 100%;
+  height: 3em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: solid thin rgb(230, 230, 230);
 }

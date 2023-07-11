@@ -54,41 +54,51 @@ export class roadmap
     const timePeriod = getFirstandLastDays(this._props.firstDay, true)
     let features: IRoadmapFeature[] = []
 
-    dataSet.sortedRecordIds.forEach((id) => {
+    console.log('dataSet', dataSet)
+    dataSet.sortedRecordIds.forEach((recordId) => {
       features.push({
-        id: String(dataSet.records[id].getValue('arades_roadmapfeatureid')),
-        projectId: String(dataSet.records[id].getValue('Project')),
-        projectName: String(dataSet.records[id].getValue('Project')),
-        name: String(dataSet.records[id].getValue('_arades_featureid_value')),
+        id: recordId,
+        projectId: Object(
+          dataSet.records[recordId].getValue('arades_projectid')
+        )?.id?.guid,
+        projectName: String(
+          dataSet.records[recordId].getFormattedValue('arades_projectid') || ''
+        ),
+        name: String(dataSet.records[recordId].getValue('arades_name') || ''),
         startDate: new Date(
-          String(dataSet.records[id].getValue('arades_startdate'))
+          String(
+            dataSet.records[recordId].getValue('arades_startdate') || new Date()
+          )
         ),
         endDate: new Date(
-          String(dataSet.records[id].getValue('arades_enddate'))
+          String(
+            dataSet.records[recordId].getValue('arades_enddate') || new Date()
+          )
         ),
-        status: String(dataSet.records[id].getValue('Status_Reason')),
-        progress: Number(dataSet.records[id].getValue('Progress'))
+        status: String(dataSet.records[recordId].getValue('statuscode')),
+        progress: 0 // Number(dataSet.records[id].getValue('Progress')||0)
       })
     })
-    features = features.filter((x) => x.id !== 'undefined')
-    if (features.length === 0) {
-      for (let i = 0; i < 10; i++) {
-        const startDate = new Date(timePeriod.startDate)
-        startDate.setDate(startDate.getDate() + i)
-        const endDate = new Date(timePeriod.startDate)
-        endDate.setDate(endDate.getDate() + i + 7)
-        features.push({
-          id: String(i),
-          name: `Feature ${i}, Request second form "Notification of activity"`,
-          status: '',
-          projectId: String(i),
-          projectName: `Project ${i} _ Project name`,
-          startDate: startDate,
-          endDate: endDate,
-          progress: 0.35
-        })
-      }
-    }
+    console.log('dataset features', features)
+    // features = features.filter((x) => x.id !== 'undefined')
+    // if (features.length === 0) {
+    //   for (let i = 0; i < 10; i++) {
+    //     const startDate = new Date(timePeriod.startDate)
+    //     startDate.setDate(startDate.getDate() + i)
+    //     const endDate = new Date(timePeriod.startDate)
+    //     endDate.setDate(endDate.getDate() + i + 7)
+    //     features.push({
+    //       id: String(i),
+    //       name: `Feature ${i}, Request second form "Notification of activity"`,
+    //       status: '',
+    //       projectId: String(i),
+    //       projectName: `Project ${i} _ Project name`,
+    //       startDate: startDate,
+    //       endDate: endDate,
+    //       progress: 0.35
+    //     })
+    //   }
+    // }
 
     this._props.features = features
 

@@ -1,0 +1,46 @@
+﻿  Determining projects to restore...
+  All projects are up-to-date for restore.
+  
+  > pcf-project@1.0.0 clean
+  > pcf-scripts clean "--noColor" "--buildMode" "development" "--outDir" "D:\\projects\\roadmap\\out\\controls" "--buildSource" "MSBuild"
+  
+  [5:30:03 PM] [clean]  Initializing...
+  [5:30:03 PM] [clean]  Cleaning build outputs...
+  [5:30:03 PM] [clean]  Succeeded
+  Cleaning output directory: bin\Debug\, Intermediate directory: obj\Debug\ and Solution Packager working directory: obj\Debug\
+  Removing log file: obj\Debug\SolutionPackager.log and generated solution package: bin\Debug\PowerAppsTools_arades.zip
+  
+  > pcf-project@1.0.0 build
+  > pcf-scripts build "--noColor" "--buildMode" "development" "--outDir" "D:\\projects\\roadmap\\out\\controls" "--buildSource" "MSBuild"
+  
+  [5:30:14 PM] [build]  Initializing...
+  [5:30:15 PM] [build]  Validating manifest...
+  [5:30:15 PM] [build]  Validating control...
+  [5:30:18 PM] [build]  Running ESLint...
+EXEC : warning : React version not specified in eslint-plugin-react settings. See https://github.com/jsx-eslint/eslint-plugin-react#configuration . [D:\projects\roadmap\roadmap.pcfproj]
+  [5:30:22 PM] [build]  Generating manifest types...
+  DeprecationWarning: 'createInterfaceDeclaration' has been deprecated since v4.8.0. Decorators are no longer supported for this function. Callers should switch to an overload that does not accept a 'decorators' parameter.
+  [5:30:22 PM] [build]  Generating design types...
+  [5:30:22 PM] [build]  Compiling and bundling control...
+  [Webpack stats]:
+  asset bundle.js 4 MiB [emitted] (name: main)
+  runtime modules 1.17 KiB 6 modules
+  modules by path ./node_modules/@fluentui/react-icons-mdl2/lib-commonjs/components/*.js 1.63 MiB 1735 modules
+  modules by path ./node_modules/@fluentui/utilities/lib-commonjs/ 244 KiB 92 modules
+  modules by path ./node_modules/@fluentui/merge-styles/lib-commonjs/ 43.2 KiB 18 modules
+  modules by path ./node_modules/@fluentui/dom-utilities/lib-commonjs/*.js 8.79 KiB 13 modules
+  modules by path ./node_modules/style-loader/dist/runtime/*.js 5.84 KiB 6 modules
+  modules by path ./roadmap/ 23.6 KiB 5 modules
+  modules by path ./node_modules/@fluentui/react-icons-mdl2/node_modules/@fluentui/react-icon-prov...(truncated) 1.45 KiB 4 modules
+  modules by path ./node_modules/@fluentui/react-icons-mdl2/lib-commonjs/*.js 402 KiB 2 modules
+  modules by path ./node_modules/@fluentui/react-icons-mdl2/lib-commonjs/utils/*.js 3.31 KiB 2 modules
+  modules by path ./node_modules/css-loader/dist/runtime/*.js 2.31 KiB 2 modules
+  modules by path ./node_modules/@fluentui/set-version/lib-commonjs/*.js 1.38 KiB 2 modules
+  + 4 modules
+  webpack 5.88.0 compiled successfully in 46870 ms
+  [5:31:12 PM] [build]  Generating build outputs...
+  [5:31:12 PM] [build]  Succeeded
+  Running Solution Packager to build package type: Unmanaged bin\Debug\PowerAppsTools_arades.zip
+  Solution: bin\Debug\PowerAppsTools_arades.zip generated.
+  Solution Package Type: Unmanaged generated.
+  Completed intermiediate files clean up.

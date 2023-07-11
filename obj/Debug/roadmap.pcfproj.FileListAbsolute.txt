@@ -1,0 +1,2 @@
+D:\projects\roadmap\obj\Debug\roadmap.pcfproj.AssemblyReference.cache
+D:\projects\roadmap\obj\Debug\roadmap.pcfproj.CoreCompileInputs.cache

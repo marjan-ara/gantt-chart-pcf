@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "IVHuHjywwsucFq+xlzcInfi3bIUeEg08ruPjnw1xKxmGfhOAgJLExoCU+nr/isWXvahyFe0BmzZmSUbvJJ+fkg==",
+  "success": true,
+  "projectFilePath": "D:\\projects\\roadmap\\roadmap.pcfproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Marjan\\.nuget\\packages\\microsoft.netframework.referenceassemblies\\1.0.0\\microsoft.netframework.referenceassemblies.1.0.0.nupkg.sha512",
+    "C:\\Users\\Marjan\\.nuget\\packages\\microsoft.netframework.referenceassemblies.net462\\1.0.0\\microsoft.netframework.referenceassemblies.net462.1.0.0.nupkg.sha512",
+    "C:\\Users\\Marjan\\.nuget\\packages\\microsoft.powerapps.msbuild.pcf\\1.24.3\\microsoft.powerapps.msbuild.pcf.1.24.3.nupkg.sha512"
+  ],
+  "logs": []
+}
